@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding FDE Shortlist - Base10</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Password lock screen */
+html.locked, html.locked body { overflow: hidden; height: 100%; }
+html.locked .site { display: none !important; }
+#lock-screen {
+  display: none;
+  position: fixed; inset: 0;
+  z-index: 9999;
+  background: linear-gradient(180deg, #0C1220 0%, #131D2E 100%);
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+html.locked #lock-screen { display: flex; }
+#lock-screen .lock-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  text-align: center;
+}
+#lock-screen .lock-brand {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #1A1A1A;
+  margin-bottom: 4px;
+}
+#lock-screen .lock-brand sup { color: #45AEEB; font-size: 0.6em; }
+#lock-screen .lock-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #45AEEB;
+  margin-bottom: 28px;
+}
+#lock-screen h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 8px;
+}
+#lock-screen p {
+  font-size: 13px;
+  color: #6C757D;
+  margin-bottom: 24px;
+}
+#lock-screen input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+  margin-bottom: 12px;
+}
+#lock-screen input:focus { border-color: #45AEEB; }
+#lock-screen button {
+  width: 100%;
+  padding: 14px 16px;
+  background: #45AEEB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+#lock-screen button:hover { background: #26A6ED; }
+#lock-screen .error {
+  font-size: 12px;
+  color: #EF4444;
+  margin-top: 10px;
+  min-height: 16px;
+}
+#lock-screen .lock-foot {
+  font-size: 11px;
+  color: #6C757D;
+  margin-top: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+:root {
+  --b10-blue: #45AEEB;
+  --b10-blue-hover: #26A6ED;
+  --b10-black: #1A1A1A;
+  --b10-dark: #343434;
+  --b10-light-bg: #F4F8FB;
+  --b10-border: #EEEEEE;
+  --b10-muted: #6C757D;
+  --b10-green: #22C55E;
+  --b10-amber: #EAB308;
+  --b10-red: #EF4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  color: var(--b10-black);
+  background: #FFFFFF;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+/* Header */
+header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--b10-border);
+  padding: 28px 0;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--b10-black);
+}
+.brand sup { color: var(--b10-blue); font-size: 0.6em; }
+.confidential {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--b10-red);
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--b10-red);
+  border-radius: 4px;
+}
+
+/* Hero */
+.hero {
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--b10-border);
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--b10-blue);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.hero .lede {
+  font-size: 17px;
+  color: var(--b10-dark);
+  max-width: 820px;
+}
+.hero .meta {
+  margin-top: 24px;
+  display: flex;
+  gap: 32px;
+  font-size: 13px;
+  color: var(--b10-muted);
+}
+.hero .meta span strong { color: var(--b10-black); }
+
+/* Brief box */
+.brief {
+  background: var(--b10-light-bg);
+  border-left: 4px solid var(--b10-blue);
+  padding: 24px 28px;
+  border-radius: 0 10px 10px 0;
+  margin: 40px 0;
+}
+.brief h3 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--b10-blue);
+  margin-bottom: 12px;
+}
+.brief p { font-size: 15px; color: var(--b10-dark); margin-bottom: 10px; }
+.brief p:last-child { margin-bottom: 0; }
+.brief .quote {
+  font-style: italic;
+  color: var(--b10-black);
+  font-weight: 500;
+  margin: 12px 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--b10-blue);
+}
+
+/* Section headers */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 56px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--b10-black);
+}
+.section-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.section-header .count {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--b10-muted);
+}
+.tier-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: 4px;
+}
+.tier-a { background: var(--b10-green); color: white; }
+.tier-b { background: var(--b10-blue); color: white; }
+.tier-c { background: var(--b10-amber); color: white; }
+
+/* Candidate cards */
+.candidate {
+  border: 1px solid var(--b10-border);
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 20px;
+  background: #FFFFFF;
+  transition: box-shadow 0.15s ease;
+}
+.candidate:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+.candidate-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.candidate-name {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+.candidate-name .num {
+  color: var(--b10-blue);
+  font-weight: 800;
+  margin-right: 10px;
+}
+.candidate-sub {
+  font-size: 14px;
+  color: var(--b10-dark);
+  font-weight: 500;
+}
+.candidate-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: var(--b10-light-bg);
+  color: var(--b10-dark);
+  letter-spacing: 0.3px;
+}
+.tag.age { background: #E8F4FA; color: var(--b10-blue-hover); }
+.tag.sf { background: #E6F7EE; color: #15803D; }
+.tag.flag { background: #FEF3C7; color: #92400E; }
+.tag.alert { background: #FEE2E2; color: #991B1B; }
+
+.candidate-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.field {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 16px;
+  font-size: 14px;
+}
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--b10-muted);
+  padding-top: 2px;
+}
+.field-value { color: var(--b10-black); }
+.field-value a {
+  color: var(--b10-blue-hover);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.field-value a:hover { border-bottom-color: var(--b10-blue-hover); }
+.field-value code {
+  font-family: SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  background: var(--b10-light-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.fit-line {
+  background: var(--b10-light-bg);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--b10-black);
+  border-left: 3px solid var(--b10-blue);
+}
+.flag-line {
+  background: #FEF3C7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #78350F;
+  border-left: 3px solid var(--b10-amber);
+}
+
+/* Where to mine next */
+.mining {
+  background: var(--b10-light-bg);
+  border-radius: 10px;
+  padding: 32px;
+  margin: 56px 0 40px;
+}
+.mining h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.mining p.intro { font-size: 14px; color: var(--b10-dark); margin-bottom: 20px; }
+.mining-item {
+  padding: 14px 0;
+  border-bottom: 1px solid #DDE6EE;
+}
+.mining-item:last-child { border-bottom: none; }
+.mining-item strong { color: var(--b10-black); }
+.mining-item .source { color: var(--b10-blue-hover); font-weight: 600; }
+
+/* Footer */
+footer {
+  margin-top: 64px;
+  padding: 32px 0;
+  border-top: 1px solid var(--b10-border);
+  font-size: 12px;
+  color: var(--b10-muted);
+  text-align: center;
+}
+footer .brand-small { font-weight: 700; color: var(--b10-black); }
+footer .brand-small sup { color: var(--b10-blue); }
+
+@media (max-width: 700px) {
+  .hero h1 { font-size: 32px; }
+  .field { grid-template-columns: 1fr; gap: 4px; }
+  .field-label { padding-top: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Password lock -->
+<div id="lock-screen" aria-hidden="true">
+  <div class="lock-card">
+    <div class="lock-brand">Base<sup>10</sup></div>
+    <div class="lock-eyebrow">Confidential</div>
+    <h2>Vibe Coding FDE Shortlist</h2>
+    <p>Enter password to view.</p>
+    <form id="lock-form" autocomplete="off">
+      <input type="password" id="lock-input" placeholder="Password" autofocus required>
+      <button type="submit">Unlock</button>
+      <div class="error" id="lock-error">&nbsp;</div>
+    </form>
+    <div class="lock-foot">Prepared by Adeyemi Ajao</div>
+  </div>
+</div>
+
+<div class="site">
+
+<header>
+  <div class="container header-row">
+    <div class="brand">Base<sup>10</sup></div>
+    <span class="confidential">Confidential</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Talent Map | Internal Hire</div>
+    <h1>Vibe Coding PM / Forward-Deployed Engineer<br>15 candidates in San Francisco</h1>
+    <p class="lede">Young builders who could own Base10's vibe-coded operational dashboards and the data-cleanliness layer underneath them. Filtered for: SF, 22-28, real shipped artifact, process-decomposition thinking.</p>
+    <div class="meta">
+      <span><strong>Prepared:</strong> May 16, 2026</span>
+      <span><strong>For:</strong> Ade, Anna, Robby</span>
+      <span><strong>Source:</strong> Slack thread C05FB7SNCQ3 (May 14-16)</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="brief">
+    <h3>What you actually said in the thread</h3>
+    <p class="quote">"Have we met anyone who would be great at this? They can't be older than like 26, right? :joy: We need FDEs..."</p>
+    <p>Robby's framing: a dedicated person for vibe-coded dashboards lets the firm think about the problem holistically - crafting skills, exposing data, building connectors. Your framing: two FTE archetypes - (1) a Gonzalo/Alejandro-type PM owning the dashboards, (2) Ina/Sarah-type juniors weekly syncing with each investor so Granolas + Slacks flow into the pipelines.</p>
+    <p>This list is the first archetype: builder-PM hybrids who can stand up an SAR (Situation-Action-Result) logging layer, decompose firm workflows into agent-runnable chains, and not need hand-holding.</p>
+  </div>
+
+  <!-- TIER A -->
+  <div class="section-header">
+    <h2><span class="tier-tag tier-a">Tier A</span>Send a DM today</h2>
+    <span class="count">5 candidates | closest archetype match</span>
+  </div>
+
+  <!-- 1. Affaan Mustafa -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">1</span>Affaan Mustafa</div>
+        <div class="candidate-sub">Product Lead, PMX Trade | Co-founder, Ito | author of "Everything Claude Code"</div>
+        <div class="candidate-tags">
+          <span class="tag age">Mid-20s</span>
+          <span class="tag sf">SF</span>
+          <span class="tag">Anthropic x Forum hackathon winner</span>
+          <span class="tag flag">Currently fundraising</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Wrote <em>the</em> resource on Claude Code agent harness, skills, memory - 97K+ GitHub stars. Built zenith.chat in 8 hours entirely in Claude Code at the Anthropic hackathon. Already thinks in the exact "decompose work -> skill chain" model we'd be hiring for.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://github.com/affaan-m/everything-claude-code">github.com/affaan-m/everything-claude-code</a> | <a href="https://affaanmustafa.com/">affaanmustafa.com</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Twitter DM <a href="https://x.com/affaanmustafa">@affaanmustafa</a></div></div>
+      <div class="flag-line"><strong>Flag:</strong> Active founder. Likely a contract/advisor pitch, not full-time. But exactly the process-decomp brain we want - even 1 day/week would be high leverage.</div>
+    </div>
+  </div>
+
+  <!-- 2. Zara Zhang -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">2</span>Zara Zhang</div>
+        <div class="candidate-sub">Building AI products at ByteDance + heavy Claude Code side projects | ex-podcast host</div>
+        <div class="candidate-tags">
+          <span class="tag age">Late 20s</span>
+          <span class="tag sf">SF (Mission)</span>
+          <span class="tag">Claude Code-native builder</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why she fits:</strong> Ships Claude Code Skills as a product practice - turned a podcast into a 300-page book through a Claude pipeline. Built <em>personalized-podcast</em> (NotebookLM-style local-running Skill) and <em>TLDW</em>. Writes publicly about "build for one" personal leverage - same mental model as building dashboards for 6 partners.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://github.com/zarazhangrui/personalized-podcast">github.com/zarazhangrui/personalized-podcast</a> | <a href="https://zarazhang.com/">zarazhang.com</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Twitter DM <a href="https://x.com/zarazhangrui">@zarazhangrui</a> | cold email via blog</div></div>
+    </div>
+  </div>
+
+  <!-- 3. Samika Sanghvi -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">3</span>Samika Sanghvi</div>
+        <div class="candidate-sub">Co-founder, Iris / Minro (YC F25) | ex-CMU adaptive AI research | UPitt grad</div>
+        <div class="candidate-tags">
+          <span class="tag age">Early 20s</span>
+          <span class="tag sf">SF</span>
+          <span class="tag">YC F25</span>
+          <span class="tag flag">Active YC founder</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why she fits:</strong> Iris is literally a personal-agent dashboard that decomposes how someone handles their day, then spins up lightweight per-tool agents (Notion, Slack, Linear, Maps). It's a working prototype of <em>exactly</em> what Robby described - an SAR system that watches behavior and replicates judgment. Closest archetype match on the list.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://www.ycombinator.com/launches/Omf-iris-the-personal-assistant">Iris launch (YC F25)</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Twitter DM <a href="https://x.com/Sampear_12">@Sampear_12</a> | LinkedIn <a href="https://www.linkedin.com/in/samika-sanghvi/">/in/samika-sanghvi</a></div></div>
+      <div class="flag-line"><strong>Flag:</strong> Active YC founder. Pitch as advisor / fellowship / "if Iris stalls, here's a perch."</div>
+    </div>
+  </div>
+
+  <!-- 4. Karim Rahme -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">4</span>Karim Rahme</div>
+        <div class="candidate-sub">Founder, Metorial / Magic MCP (YC F25) | 2nd-time founder (built ticketing for Travis Scott / 50 Cent at 17)</div>
+        <div class="candidate-tags">
+          <span class="tag age">~22</span>
+          <span class="tag sf">SF</span>
+          <span class="tag">YC F25</span>
+          <span class="tag flag">Active YC founder</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Magic MCP is process-decomposition as a product - "Vercel for MCP servers, 600+ integrations, zero-config for vibe coding." He's been building the infra layer we'd use. If Anthropic's first-party stack out-competes Metorial, he's the rare founder who'd take an FDE role at a firm betting on this space.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://www.ycombinator.com/launches/OoY-magic-mcp-by-metorial">Magic MCP (YC F25)</a> | GitHub <a href="https://github.com/RahmeKarim">/RahmeKarim</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">LinkedIn <a href="https://www.linkedin.com/in/karim-rahme/">/in/karim-rahme</a></div></div>
+      <div class="flag-line"><strong>Flag:</strong> Active YC founder. Same advisor / fellowship framing.</div>
+    </div>
+  </div>
+
+  <!-- 5. Railly Hugo -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">5</span>Railly Hugo</div>
+        <div class="candidate-sub">AI Software Engineer at Clerk | Founder, Crafter Station (500+ ship-in-public community)</div>
+        <div class="candidate-tags">
+          <span class="tag age">Mid-20s</span>
+          <span class="tag flag">LATAM (Clerk is SF - verify in-person)</span>
+          <span class="tag">Next.js Global Hackathon 2025 winner</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Design-engineer hybrid who built and won the first-ever Next.js Global Hackathon (Text0) while holding a full-time AI engineering job AND running a 500-person builder community. The "ship fast + organize a workflow + bring others along" triple is the rarest profile on this list - and it's exactly what owning B10's dashboard portfolio needs.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://github.com/crafter-station/text0">github.com/crafter-station/text0</a> | <a href="https://www.railly.dev/">railly.dev</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Cold email via railly.dev | warm intro through Clerk (Colin/Braden Sidoti)</div></div>
+    </div>
+  </div>
+
+  <!-- TIER B -->
+  <div class="section-header">
+    <h2><span class="tier-tag tier-b">Tier B</span>Strong builders worth a call</h2>
+    <span class="count">5 candidates | ideal age, real shipped work</span>
+  </div>
+
+  <!-- 6. Antonio Llano -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">6</span>Antonio Llano</div>
+        <div class="candidate-sub">Stanford EE/CS sophomore | 3x IOI/IMO trainee | Colombian national computing champion</div>
+        <div class="candidate-tags">
+          <span class="tag age">20</span>
+          <span class="tag sf">Stanford (Bay Area)</span>
+          <span class="tag">AGI House Build Day 2nd place</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Built Pike Piker (voice-driven Peloton-meets-sci-fi rig) in one day at AGI House Consumer AI Build Day - competition-level CS rigor combined with the AGI House weekend-ship culture you described. Colombian - bonus warmth with your network.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://x.com/inworld_ai/status/1960460815586484384">Pike Piker (Inworld tweet)</a> | <a href="https://profiles.stanford.edu/antonio-llano">Stanford profile</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">LinkedIn <code>antonio-llano</code> | personal site <a href="https://llanome.com">llanome.com</a></div></div>
+    </div>
+  </div>
+
+  <!-- 7. Michael Li -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">7</span>Michael Li</div>
+        <div class="candidate-sub">Stanford student | currently interning at NVIDIA | Pike Piker co-builder</div>
+        <div class="candidate-tags">
+          <span class="tag age">College-age</span>
+          <span class="tag sf">Stanford / SF</span>
+          <span class="tag">AGI House Build Day winner</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Same Pike Piker win as #6, but the full-stack/hardware side. NVIDIA embedded-systems exposure + AGI House culture = unusual combination of "ship in a weekend" + actual systems chops, which matters when our dashboards eventually touch live data infra.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value">Pike Piker (see above)</div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">LinkedIn <code>michael-li-002775236</code></div></div>
+    </div>
+  </div>
+
+  <!-- 8. Liz Dorman -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">8</span>Liz Dorman</div>
+        <div class="candidate-sub">Co-founder, Era Laboratories | ex-Apple visionOS | ex-Humane | Interact 2025 fellow</div>
+        <div class="candidate-tags">
+          <span class="tag age">Late 20s</span>
+          <span class="tag sf">SF (Mission)</span>
+          <span class="tag">Interact 2025 SF Residency</span>
+          <span class="tag flag">Just raised pre-seed</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why she fits:</strong> Ships hardware/software loops end-to-end - AI Lampy, AI vanity mirror, 50+ AI devices at her Symposium. Apple visionOS + Humane pedigree means she understands product polish, which Robby/Ani would value when our dashboards become firm-facing rather than scratch tools.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://www.era.computer/">era.computer</a> | <a href="https://lizwanders.world">lizwanders.world</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Email <code>liz.g.dorman@gmail.com</code></div></div>
+      <div class="flag-line"><strong>Flag:</strong> Just closed pre-seed for Era Labs. Long-shot for FT but worth the conversation as advisor / Anthropic-event collaborator.</div>
+    </div>
+  </div>
+
+  <!-- 9. Michael Adams -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">9</span>Michael Adams</div>
+        <div class="candidate-sub">Solo builder, SF Gov Graph / Civlab | runs "How SF Gov Works" civics class</div>
+        <div class="candidate-tags">
+          <span class="tag age">Mid-20s</span>
+          <span class="tag sf">SF</span>
+          <span class="tag">Interact 2025 SF Residency</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Built SF Gov Graph solo - process-decomposed an entire bureaucracy into queryable structure using AI to clean messy public data. That's the cleanest "fight entropy" archetype on the list. He's chosen SF civics as his beat, so he's not going anywhere.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://sfgov.civlab.org">sfgov.civlab.org</a> | writing at <a href="https://writing.civlab.org">writing.civlab.org</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Twitter DM <a href="https://x.com/m_atoms">@m_atoms</a></div></div>
+    </div>
+  </div>
+
+  <!-- 10. Anna Mitchell -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">10</span>Anna Mitchell</div>
+        <div class="candidate-sub">Independent researcher | ex-Rippling (growth) | Stanford Review | Schmidt Futures</div>
+        <div class="candidate-tags">
+          <span class="tag age">Late 20s</span>
+          <span class="tag sf">SF (Mission)</span>
+          <span class="tag">Interact 2025 SF Residency</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why she fits:</strong> Rippling growth background = operator who's already wrangled messy CRM/people data at scale. Writing publicly about hyper-personalization and anthropomorphism in AI products. The operator + AI-thinker combo lines up with the Type-2 ("Ina/Sarah") role too - she could span both archetypes you described.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value">Substack <a href="https://annarmitchell.substack.com">annarmitchell.substack.com</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Via Interact alumni network | cold email through Substack</div></div>
+    </div>
+  </div>
+
+  <!-- TIER C -->
+  <div class="section-header">
+    <h2><span class="tier-tag tier-c">Tier C</span>Wildcards - read the flag</h2>
+    <span class="count">5 candidates | archetype match but constraint to verify</span>
+  </div>
+
+  <!-- 11. Anthony Cueva -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">11</span>Anthony Cueva</div>
+        <div class="candidate-sub">Co-founder, Crafter Station | building Lupa (Knowledge Platform for AI Agents)</div>
+        <div class="candidate-tags">
+          <span class="tag age">Early/mid-20s</span>
+          <span class="tag flag">LATAM - would need relocate</span>
+          <span class="tag">Next.js Hackathon 2025 winner</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Shipped 6+ agent/knowledge tools (text0, GitHunter, Gradual, AIFindr, CompyAI, Open Deep Research). Specifically building "knowledge platforms for AI agents" - direct neighbor to what we'd build internally.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://github.com/cuevaio">github.com/cuevaio</a> | <a href="https://www.cueva.io/">cueva.io</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Cold email via cueva.io | warm intro through Railly (#5)</div></div>
+      <div class="flag-line"><strong>Flag:</strong> LATAM-based. Would need relocation discussion. Spanish-speaking - bonus given your network.</div>
+    </div>
+  </div>
+
+  <!-- 12. Janak Sunil -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">12</span>Janak Sunil</div>
+        <div class="candidate-sub">Co-founder/CEO, Bear (YC F25) | built UCLA's BruinRent in college (acquired by UCLA) | ex-Coinbase</div>
+        <div class="candidate-tags">
+          <span class="tag age">Early 20s</span>
+          <span class="tag sf">SF</span>
+          <span class="tag">YC F25</span>
+          <span class="tag flag">Bear is already monetizing</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> 70+ paying customers in months (Browserbase, Wispr Flow, Cal.com). Already done the "build, ship, sell" loop twice (BruinRent -> Bear). Operator-builder pedigree at age 22 is unusual.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://bear.ai">bear.ai</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Twitter DM <a href="https://x.com/janaksunil">@janaksunil</a> | LinkedIn <code>janaksunil</code></div></div>
+      <div class="flag-line"><strong>Flag:</strong> Bear is working. Founder-mode active. Pitch is advisor/network, not hire.</div>
+    </div>
+  </div>
+
+  <!-- 13. Siddhant Paliwal -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">13</span>Siddhant Paliwal</div>
+        <div class="candidate-sub">Co-founder/CTO, Bear (YC F25) | started first company at 15 (parking app, invited to UN) | ex-Intel, ex-Third Chair (YC X25)</div>
+        <div class="candidate-tags">
+          <span class="tag age">Early 20s</span>
+          <span class="tag sf">SF</span>
+          <span class="tag">YC F25</span>
+          <span class="tag flag">Bear co-founder</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Solo-shipped since 15. CTO of a monetizing YC company at ~22. Deep engineering chops with operator instincts - the rare profile where the technical bar is real, not just "vibe coder."</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value">Bear (same as #12)</div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">LinkedIn <code>siddhantpaliwal</code></div></div>
+      <div class="flag-line"><strong>Flag:</strong> Bear co-founder. Same caveat as #12.</div>
+    </div>
+  </div>
+
+  <!-- 14. Krish -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">14</span>Krish (Krish120003)</div>
+        <div class="candidate-sub">Carleton CS undergrad | solo builder | "writes code that runs fast"</div>
+        <div class="candidate-tags">
+          <span class="tag age">21-22</span>
+          <span class="tag alert">Ottawa - would need relocate</span>
+          <span class="tag">Next.js Hackathon 2025 (Fastest App)</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Solo-built gitfaster and won Fastest App at the Next.js Global Hackathon. Performance-obsessed solo builder is exactly what you want when our dashboards eventually hit slow CRM APIs and need real caching/prefetch architecture.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://github.com/Krish120003/gitfaster">github.com/Krish120003/gitfaster</a> | <a href="https://www.krish.gg/">krish.gg</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">LinkedIn DM <code>krish-krish</code> with relocation offer</div></div>
+      <div class="flag-line"><strong>Flag:</strong> Ottawa-based. Would require visa + relocation. Worth the cost if first call resonates - solo-builder energy is hard to source.</div>
+    </div>
+  </div>
+
+  <!-- 15. Rene Turcios -->
+  <div class="candidate">
+    <div class="candidate-head">
+      <div>
+        <div class="candidate-name"><span class="num">15</span>Rene Turcios</div>
+        <div class="candidate-sub">Founder, Agentcies.co | "hackathon king of SF" - 200+ wins since 2023</div>
+        <div class="candidate-tags">
+          <span class="tag age">29</span>
+          <span class="tag sf">SF (lives the circuit)</span>
+          <span class="tag alert">Over your 26 bar</span>
+          <span class="tag">SF Standard featured</span>
+        </div>
+      </div>
+    </div>
+    <div class="candidate-body">
+      <div class="fit-line"><strong>Why he fits:</strong> Literal canonical vibe-coder. Businesses pay him to ship in hours work that would take engineering teams weeks. Doesn't code traditionally - pure PM-orchestrating-Claude/Cursor archetype. Knows every SF hackathon community by first name, which makes him a sourcing channel even if we don't hire him.</div>
+      <div class="field"><div class="field-label">Shipped</div><div class="field-value"><a href="https://reneturcios.com/">reneturcios.com</a> | <a href="https://sfstandard.com/2025/07/05/rene-turcios-hackathon-labubu-vibe-coding-chatgpt/">SF Standard profile</a></div></div>
+      <div class="field"><div class="field-label">Outreach</div><div class="field-value">Twitter DM | warm intro through any AGI House regular</div></div>
+      <div class="flag-line"><strong>Flag:</strong> 29 - over your 26 bar. Already contract-structured. If you can let go of the age constraint for the archetype-perfect person, this is the call. Otherwise, use him to source the next 10 candidates.</div>
+    </div>
+  </div>
+
+  <!-- WHERE TO MINE -->
+  <div class="mining">
+    <h2>Where the signal was strongest (mine these next time)</h2>
+    <p class="intro">Best ROI for the next 10 candidates isn't more web search - it's three warm intros and one in-person event.</p>
+    <div class="mining-item"><strong>Email Henry Yin (AGI House SF):</strong> <span class="source">"Who from the last 2 Build Days would take an FDE role at a VC firm?"</span> - gets you 10+ named candidates in 48 hours.</div>
+    <div class="mining-item"><strong>Email Cory Levy (Z Fellows):</strong> Roster is gated in their Slack but Cory hands out names freely for "I'm hiring your alumni" pitches.</div>
+    <div class="mining-item"><strong>Email Serge Vasylechko (Sundai Club):</strong> Ask for the SF chapter regulars who've shipped 3+ Sundays in a row - those are the FDE archetypes.</div>
+    <div class="mining-item"><strong>Lurk one event:</strong> Have someone (Caroline's replacement, or Robby) attend the next AGI House Build Day or Frontier Tower demo night. The top 3 teams every event are 22-26 and ship-obsessed. Recruit live.</div>
+    <div class="mining-item"><strong>Channels that did NOT yield:</strong> <span class="source">Anthropic Opus 4.6 hackathon winners (zero SF/age fit) | Sundai SF chapter regulars (Boston-based, no public SF roster) | Z Fellows + SPC rosters (gated) | YC public LinkedIns of solo founders under 26 (most are founder-mode, not hire-mode).</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="brand-small">Base<sup>10</sup> Partners</div>
+    <div style="margin-top: 6px;">Prepared by Adeyemi Ajao | May 16, 2026 | Confidential</div>
+  </div>
+</footer>
+
+</div><!-- /.site -->
+
+<script>
+(function () {
+  var PW = "Base10Automation!";
+  var KEY = "b10-fde-shortlist-unlocked";
+  var html = document.documentElement;
+  if (sessionStorage.getItem(KEY) === "1") {
+    // already unlocked this session
+  } else {
+    html.classList.add("locked");
+  }
+  var form = document.getElementById("lock-form");
+  var input = document.getElementById("lock-input");
+  var err = document.getElementById("lock-error");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (input.value === PW) {
+      sessionStorage.setItem(KEY, "1");
+      html.classList.remove("locked");
+    } else {
+      err.textContent = "Incorrect password.";
+      input.value = "";
+      input.focus();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
